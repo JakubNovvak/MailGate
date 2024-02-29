@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MailGate.Server.Application.Dtos;
 using MailGate.Server.Domain.Entities;
 
 namespace MailGate.Server.Infrastructure.Repositories
