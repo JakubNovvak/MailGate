@@ -1,0 +1,6 @@
+@MailGate.Server.API_HostAddress = http://localhost:5276
+
+GET {{MailGate.Server.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
