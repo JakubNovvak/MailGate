@@ -9,9 +9,9 @@ namespace MailGate.Server.Domain.Entities
 {
     public class DbEntryEmail
     {
-        int Id { get; set; }
-        bool WasSuccessfullySent { get; set; }
-        DateTime WhenSubmitted { get; set; }
+        public int Id { get; set; }
+        public bool WasSuccessfullySent { get; set; }
+        public DateTime WhenSubmitted { get; set; }
         public string TargetEmail { get; set; } = null!;
         public string MessageSubject { get; set; } = null!;
         public string MessageContent { get; set; } = null!;
