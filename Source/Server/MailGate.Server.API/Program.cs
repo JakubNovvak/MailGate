@@ -1,5 +1,6 @@
 using MailGate.Server.Infrastructure.Presistence;
 using MailGate.Server.Infrastructure.Repositories;
+using MailGate.Server.Application.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,7 @@ else
     );
 }
 
+builder.Services.AddScoped<ITasksService, ITasksService>();
 builder.Services.AddScoped<IRepository, Repository>();
 
 #endregion
