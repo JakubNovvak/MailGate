@@ -1,5 +1,6 @@
 using MailGate.Server.Infrastructure.Presistence;
 using MailGate.Server.Infrastructure.Repositories;
+using MailGate.Server.Domain;
 using MailGate.Server.Application.Services;
 using Microsoft.EntityFrameworkCore;
 
