@@ -9,9 +9,9 @@ namespace MailGate.Server.Application.Dtos
 {
     public class ReadEmailEntryDto
     {
-        int Id { get; set; }
-        bool WasSuccessfullySent { get; set; }
-        string WhenSubmitted { get; set; } = null!;
+        public int Id { get; set; }
+        public bool WasSuccessfullySent { get; set; }
+        public string WhenSubmitted { get; set; } = null!;
         public string TargetEmail { get; set; } = null!;
         public string MessageSubject { get; set; } = null!;
         public string MessageContent { get; set; } = null!;
