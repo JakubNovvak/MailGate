@@ -17,7 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <ProjectReference Include="..\MailGate.Server.Application\MailGate.Server.Application.csproj" />
     <ProjectReference Include="..\MailGate.Server.Domain\MailGate.Server.Domain.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+  	<FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>
