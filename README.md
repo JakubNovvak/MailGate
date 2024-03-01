@@ -22,7 +22,7 @@
 
 ![Product Name Screen Shot][product-screenshot]
 
-MailGate is a anonymous mailing service, allowing to send single messages to the chosen email address. The idea of the project is to give users the possiblity to send messages without the need to register, while staying anonymous.
+MailGate is an anonymous mailing service, allowing to send single messages to the chosen email address. The idea of the project is to give users the possiblity to send messages without the need to register, while staying anonymous.
 
 The future objective of development is to:
 - Give users the ability to send email with attachments
