@@ -1,7 +1,6 @@
 import * as yup from "yup";
 
 export interface FormValues {
-    emailSendDate: string;
     targetEmail: string;
     messageSubject: string;
     messageContent: string;

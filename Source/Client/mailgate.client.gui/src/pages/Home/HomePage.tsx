@@ -18,7 +18,7 @@ const GridInput = styled(Grid)({
 function onSubmit(formikValues: FormValues, setSendingState: React.Dispatch<React.SetStateAction<boolean>>, setSendSucess: React.Dispatch<React.SetStateAction<number>>) {
     console.log(formikValues);
     //TODO: Submit the form.
-    FetchData(setSendingState, setSendSucess);
+    FetchData(formikValues, setSendingState, setSendSucess);
     console.log("onSubmit");
 }
 
@@ -117,7 +117,7 @@ export default function HomePage() {
     }
 
     return (
-        <Formik initialValues={{ messageContent: "", messageSubject: "", targetEmail: "", emailSendDate: "" }}
+        <Formik initialValues={{ messageContent: "", messageSubject: "", targetEmail: ""}}
             onSubmit={(values) => { onSubmit(values, setSendingState, setSendSucess) }}
             validationSchema={BasicSchema}
         >
