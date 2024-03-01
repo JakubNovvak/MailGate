@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MailGate.Server.Application.Dtos;
 using MailGate.Server.Domain.Entities;
+using MailGate.Server.Domain.Interfaces;
 using MailGate.Server.Infrastructure.Presistence;
 using System;
 using System.Collections.Generic;

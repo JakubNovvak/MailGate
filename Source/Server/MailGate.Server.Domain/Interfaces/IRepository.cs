@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MailGate.Server.Domain.Entities;
 
-namespace MailGate.Server.Infrastructure.Repositories
+namespace MailGate.Server.Domain.Interfaces
 {
     public interface IRepository
     {
@@ -15,7 +15,7 @@ namespace MailGate.Server.Infrastructure.Repositories
         IEnumerable<DbEntryEmail> GetAllEmailEntries();
         DbEntryEmail? GetEmailEntry(int emailId);
         bool DoesEmailExist(int emailId);
-        
+
 
         //TODO: Implement Additional Functions
         IEnumerable<DbEntryEmail> GetAllEmailsByEmailAddress(string emailAddress);

@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using MailGate.Server.Application.Dtos;
-using MailGate.Server.Domain;
 using MailGate.Server.Domain.Entities;
-using MailGate.Server.Infrastructure.Repositories;
+using MailGate.Server.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,22 +14,43 @@ namespace MailGate.Server.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IRepository _repo;
+        private readonly IGmailServiceClient _gmailClient;
 
-        public TasksService(IMapper mapper, IRepository repo)
+        public TasksService(IMapper mapper, IRepository repo, IGmailServiceClient gmailClient)
         {
             _mapper = mapper;
             _repo = repo;
+            _gmailClient = gmailClient;
         }
 
-        public ReadEmailEntryDto CreateEmailEntry(CreateEmailEntryDto emailEntryToCreate)
+        public async Task<ReadEmailEntryDto> CreateEmailEntry(CreateEmailEntryDto emailEntryToCreate)
         {
             if (emailEntryToCreate == null)
                 throw new ArgumentNullException();
 
             var dbEntryEmail = _mapper.Map<DbEntryEmail>(emailEntryToCreate);
-            dbEntryEmail.WhenSubmitted = DateTime.Now.ToUniversalTime();
 
-            //If DbUpdateException, catch in the Controller
+            //Caution: At the moment of development, the only information about delievery is "WasSuccessfullySent" field
+            bool isSendSuccess;
+            try
+            {
+                await _gmailClient.SendEmailAsync(dbEntryEmail.TargetEmail, dbEntryEmail.MessageSubject, dbEntryEmail.MessageContent);
+
+                isSendSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error! The message wasn't delivered because \"{ex.Message}\"");
+                isSendSuccess = false;
+            }
+
+            //TODO: Add catch statements for "FileNotFound" and "FileLoad" Exceptions
+
+            //Change needed fields
+            dbEntryEmail.WhenSubmitted = DateTime.Now.ToUniversalTime();
+            dbEntryEmail.WasSuccessfullySent = isSendSuccess;
+
+            //Caution: DbUpdateException is catched in the Controller
             _repo.CreateEmailEntry(dbEntryEmail);
 
             return _mapper.Map<ReadEmailEntryDto>(dbEntryEmail);
