@@ -11,7 +11,7 @@ namespace MailGate.Server.Application.Profiles
 {
     public class EmailEntryProfile: Profile
     {
-        EmailEntryProfile() 
+        public EmailEntryProfile()
         {
             CreateMap<CreateEmailEntryDto, DbEntryEmail>();
             CreateMap<DbEntryEmail, ReadEmailEntryDto>();
