@@ -2,6 +2,7 @@
 using MailGate.Server.Application.Dtos;
 using MailGate.Server.Application.Services;
 using Microsoft.EntityFrameworkCore;
+using MailGate.Server.Domain.Interfaces;
 
 namespace MailGate.Server.API.Controllers
 {
@@ -10,17 +11,35 @@ namespace MailGate.Server.API.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ITasksService _taskService;
+        private readonly IGmailServiceClient _gmailClient;
 
-        public TasksController(ITasksService taskService)
+        public TasksController(ITasksService taskService, IGmailServiceClient gmailClient)
         {
             _taskService = taskService;
+            _gmailClient = gmailClient;
         }
 
         [HttpGet]
-        [Route("/helloworld", Name = "HelloWorldAction")]
+        [Route("/HelloWorld", Name = "HelloWorldAction")]
         public ActionResult<string> TestGet()
         {
             return Ok("Hello World!");
+        }
+
+        [HttpGet]
+        [Route("/SendTestEmail", Name = "SendEmail")]
+        public async Task<IActionResult> SendEmail(string targetEmail, string emailSubject, string emailContent)
+        {
+            try
+            {
+                await _gmailClient.SendEmailAsync(targetEmail, emailSubject, emailContent);
+                return Ok("Email was delivered successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"There was an error while sending and email.... {ex.Message}");
+                return BadRequest($"There was an error while sending and email.... {ex.Message}");
+            }
         }
 
         [HttpGet]
@@ -77,11 +96,11 @@ namespace MailGate.Server.API.Controllers
 
         [HttpPost]
         [Route("", Name = "CreateEmailEntry")]
-        public ActionResult CreateEmailEntry(CreateEmailEntryDto createEmailEntryDto)
+        public async Task<ActionResult> CreateEmailEntry(CreateEmailEntryDto createEmailEntryDto)
         {
             try
             {
-                var createdEmailEntryReadDto = _taskService.CreateEmailEntry(createEmailEntryDto);
+                var createdEmailEntryReadDto = await _taskService.CreateEmailEntry(createEmailEntryDto);
                 return CreatedAtRoute(nameof(GetEmailEntryById), new { emailEntryId = createdEmailEntryReadDto.Id }, createdEmailEntryReadDto);
             }
             catch (ArgumentNullException ex)
