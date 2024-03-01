@@ -35,7 +35,7 @@ namespace MailGate.Server.Infrastructure.Presistence
                     {
                         Id = 1,
                         WasSuccessfullySent = true,
-                        WhenSubmitted = new DateTime(),
+                        WhenSubmitted = DateTime.Now.ToUniversalTime(),
                         TargetEmail = "test@test.net",
                         MessageSubject = "Hello World!",
                         MessageContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +

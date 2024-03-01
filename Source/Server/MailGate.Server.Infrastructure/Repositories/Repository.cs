@@ -40,7 +40,7 @@ namespace MailGate.Server.Infrastructure.Repositories
         public IEnumerable<DbEntryEmail> GetAllEmailEntries()
         {
             var allDbEntryEmails = _dbContext.dbEntryEmails.ToList();
-
+            
             return allDbEntryEmails;
         }
 
