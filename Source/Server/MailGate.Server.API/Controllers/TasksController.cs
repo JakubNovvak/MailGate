@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MailGate.Server.Application.Dtos;
+using MailGate.Server.Application.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace MailGate.Server.API.Controllers
 {
@@ -7,6 +9,13 @@ namespace MailGate.Server.API.Controllers
     [Route("api/[controller]")]
     public class TasksController : ControllerBase
     {
+        private readonly ITasksService _taskService;
+
+        public TasksController(ITasksService taskService)
+        {
+            _taskService = taskService;
+        }
+
         [HttpGet]
         [Route("/helloworld", Name = "HelloWorldAction")]
         public ActionResult<string> TestGet()
@@ -20,8 +29,18 @@ namespace MailGate.Server.API.Controllers
         {
             try
             {
-                //TODO: Implmenet function in Application layer
-                return Ok("Here will be all Email Entries in the database!");
+                var readEmailEntriesDto = _taskService.GetAllEmailEntries();
+                return Ok(readEmailEntriesDto);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine($">[TasksCtr] <GetAll> No entries were found - the table is empty!: {ex.Message}");
+                return NotFound("There is no email entries in the database.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($">[TasksCtr] <GetAll> Received null value - either list or DbSet{ex.Message}");
+                return BadRequest($"The returned data seems to be invalid: {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -35,8 +54,19 @@ namespace MailGate.Server.API.Controllers
         public ActionResult<ReadEmailEntryDto> GetEmailEntryById(int emailEntryId)
         {
             try
-            {   //TODO: Implmenet function in Application layer
-                return Ok("Here will be returned Email Entry from the database!");
+            {
+                var emailEntryReadDto = _taskService.GetEmailEntry(emailEntryId);
+                return Ok(emailEntryReadDto);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine($">[TasksCtr] <GetById> negative email id \"{emailEntryId}\" - {ex.Message}");
+                return BadRequest($"Email id \"{emailEntryId}\" is not a valid id.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine($">[TasksCtr] <GetById> There is no email entry with this id: \"{emailEntryId}\" - {ex.Message}");
+                return BadRequest($"There is no email entry with this id: \"{emailEntryId}\"");
             }
             catch (Exception ex)
             {
@@ -51,9 +81,18 @@ namespace MailGate.Server.API.Controllers
         {
             try
             {
-                //TODO: Implmenet function in Application layer
-                //TODO: Swap with CreatedAtRoute()
-                return Ok("Here will be returned created Email Entry and route to it!");
+                var createdEmailEntryReadDto = _taskService.CreateEmailEntry(createEmailEntryDto);
+                return CreatedAtRoute(nameof(GetEmailEntryById), new { emailEntryId = createdEmailEntryReadDto.Id }, createdEmailEntryReadDto);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($">[TasksCtr] <Create> There was no email entry provided: {ex.Message}");
+                return BadRequest($"There was an unexpected error while getting email entries : {ex.Message}");
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($">[TasksCtr] <Create> There was a problem with adding the new email entry: {ex.Message}");
+                return BadRequest($"There was a problem with adding the new email entry: {ex.Message}");
             }
             catch (Exception ex)
             {
