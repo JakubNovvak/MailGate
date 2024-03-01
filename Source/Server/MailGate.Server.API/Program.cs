@@ -28,7 +28,7 @@ else
     );
 }
 
-builder.Services.AddScoped<ITasksService, ITasksService>();
+builder.Services.AddScoped<ITasksService, TasksService>();
 builder.Services.AddScoped<IRepository, Repository>();
 
 #endregion
