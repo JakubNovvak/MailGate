@@ -9,16 +9,16 @@ export default function GenericFormInput({ textInfo, FormikValue, FormikBlurHand
     const placeholder = textInfo[2];
 
     return (<>
-        <Grid item xs={3} sx={{/**backgroundColor: "blue"*/ }}>
+        <Grid item xs={2} sx={{/**backgroundColor: "blue"*/ }}>
             <Typography variant="body1" sx={{ marginRight: "1rem" }}>
                 {leftLabel}
             </Typography>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={10}>
             <Input
                 id={inputId}
                 value={FormikValue}
-                sx={{ minWidth: "30rem", maxWidth: "40rem" }}
+                sx={{ minWidth: "30rem", maxWidth: "40rem", backgroundColor: "white" }}
                 placeholder={placeholder}
                 onChange={FormikChangeHandler} onBlur={FormikBlurHandler}
                 color={formikTouched && formikError ? "danger" : formikTouched && formikError === undefined ? "success" : "neutral"}
