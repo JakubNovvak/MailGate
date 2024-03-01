@@ -1,8 +1,9 @@
 using MailGate.Server.Infrastructure.Presistence;
 using MailGate.Server.Infrastructure.Repositories;
-using MailGate.Server.Domain;
+using MailGate.Server.Infrastructure.ApiService;
 using MailGate.Server.Application.Services;
 using Microsoft.EntityFrameworkCore;
+using MailGate.Server.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ else
     );
 }
 
+builder.Services.AddTransient<IGmailServiceClient, GmailServiceClient>();
 builder.Services.AddScoped<ITasksService, TasksService>();
 builder.Services.AddScoped<IRepository, Repository>();
 
