@@ -11,6 +11,6 @@ namespace MailGate.Server.Application.Services
     {
         IEnumerable<ReadEmailEntryDto> GetAllEmailEntries();
         ReadEmailEntryDto GetEmailEntry(int emailId);
-        ReadEmailEntryDto CreateEmailEntry(CreateEmailEntryDto emailEntryToCreate);
+        Task<ReadEmailEntryDto> CreateEmailEntry(CreateEmailEntryDto emailEntryToCreate);
     }
 }
