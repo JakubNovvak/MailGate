@@ -32,7 +32,7 @@ function HomePageContent() {
 
     return (
         <Box sx={{ width: "100%", /**backgroundColor: "red"*/ }}>
-            <Paper elevation={22} sx={{ minWidth: "70rem", minHeight: "40rem" }}>
+            <Paper elevation={22} sx={{ minWidth: "60rem", minHeight: "40rem", backgroundColor: "#F1F8FF" }}>
                 <TopPaperComponent />
 
                 <Divider />
@@ -58,13 +58,13 @@ function HomePageContent() {
 
                             {/*Field number 3*/}
                             <GridInput container>
-                                <Grid item xs={3} sx={{/**backgroundColor: "blue",*/ display: "flex", flexDirection: "column", minHeight: "10rem" }}>
+                                <Grid item xs={2} sx={{/**backgroundColor: "blue",*/ display: "flex", flexDirection: "column", minHeight: "10rem" }}>
                                     <Typography variant="body1" sx={{ marginRight: "1rem" }}>
                                         {"Content:"}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={9}>
-                                    <Textarea sx={{ minWidth: "30rem", maxWidth: "40rem", minHeight: "10rem", maxHeight: "18rem" }}
+                                <Grid item xs={10}>
+                                    <Textarea sx={{ minWidth: "30rem", maxWidth: "40rem", minHeight: "10rem", maxHeight: "18rem", backgroundColor: "white" }}
                                         placeholder="Type your message here" name="messageContent"
                                         value={formikProps.values.messageContent} onChange={formikProps.handleChange} onBlur={formikProps.handleBlur}
                                         color={
@@ -81,7 +81,7 @@ function HomePageContent() {
                                 <Grid item xs={2}>
                                     {!formikProps.isValid
                                         ?
-                                        <Button disabled sx={{ color: "black", backgroundColor: "lightgray" }}>Submit</Button>
+                                        <Button disabled variant="outlined" sx={{ color: "black", backgroundColor: "lightgray" }}>Submit</Button>
                                         :
                                         <Button type="submit" sx={{ color: "black", backgroundColor: "lightBlue" }}>Submit</Button>
                                     }
@@ -104,7 +104,7 @@ export default function HomePage() {
     if (sendingState) {
         return (
             <Box sx={{ width: "100%", /**backgroundColor: "red"*/ }}>
-                <Paper elevation={22} sx={{ minWidth: "70rem", minHeight: "40rem" }}>
+                <Paper elevation={22} sx={{ minWidth: "60rem", minHeight: "40rem", backgroundColor: "#F1F8FF" }}>
                     <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "40rem" }}>
                         <CircularProgress size={50} />
                     </Box>
@@ -119,10 +119,10 @@ export default function HomePage() {
 
     return (
         <>
-            {sendSucess == 1 ? <PostErorrSnackbar TextIndex={2} IsDangerSnackBar={false}/> : <></>}
-            {sendSucess == 2 ? <PostErorrSnackbar TextIndex={0} IsDangerSnackBar={true}/> : <></>}
-            {sendSucess == 3 ? <PostErorrSnackbar TextIndex={1} IsDangerSnackBar={true}/> : <></>}
-            <Formik initialValues={{ messageContent: "", messageSubject: "", targetEmail: ""}}
+            {sendSucess == 1 ? <PostErorrSnackbar TextIndex={2} IsDangerSnackBar={false} /> : <></>}
+            {sendSucess == 2 ? <PostErorrSnackbar TextIndex={0} IsDangerSnackBar={true} /> : <></>}
+            {sendSucess == 3 ? <PostErorrSnackbar TextIndex={1} IsDangerSnackBar={true} /> : <></>}
+            <Formik initialValues={{ messageContent: "", messageSubject: "", targetEmail: "" }}
                 onSubmit={(values) => { onSubmit(values, setSendingState, setSendSucess) }}
                 validationSchema={BasicSchema}
             >
