@@ -6,6 +6,7 @@ import { Form, Formik, useFormikContext } from "formik";
 import GenericFormInput from "../../components/HomePage/GenericFormInput";
 import FetchData from "../../components/HomePage/API/FetchData";
 import { useEffect, useState } from "react";
+import PostErorrSnackbar from "../../components/HomePage/PostSnackbar";
 
 const GridInput = styled(Grid)({
     display: "flex",
@@ -98,7 +99,7 @@ function HomePageContent() {
 export default function HomePage() {
     const [sendingState, setSendingState] = useState<boolean>(false);
     const [sendSucess, setSendSucess] = useState<number>(0);
-    //0 - neutral, 1 - success, 2 - failed
+    //0 - neutral, 1 - success, 2 - failed, 3 - Connected but send failed
 
     if (sendingState) {
         return (
@@ -112,16 +113,21 @@ export default function HomePage() {
         );
     }
 
-    if (sendSucess == 2) {
-        setSendSucess(0);
-    }
+    // if (sendSucess == 2) {
+    //     setSendSucess(0);
+    // }
 
     return (
-        <Formik initialValues={{ messageContent: "", messageSubject: "", targetEmail: ""}}
-            onSubmit={(values) => { onSubmit(values, setSendingState, setSendSucess) }}
-            validationSchema={BasicSchema}
-        >
-            <HomePageContent />
-        </Formik>
+        <>
+            {sendSucess == 1 ? <PostErorrSnackbar TextIndex={2} IsDangerSnackBar={false}/> : <></>}
+            {sendSucess == 2 ? <PostErorrSnackbar TextIndex={0} IsDangerSnackBar={true}/> : <></>}
+            {sendSucess == 3 ? <PostErorrSnackbar TextIndex={1} IsDangerSnackBar={true}/> : <></>}
+            <Formik initialValues={{ messageContent: "", messageSubject: "", targetEmail: ""}}
+                onSubmit={(values) => { onSubmit(values, setSendingState, setSendSucess) }}
+                validationSchema={BasicSchema}
+            >
+                <HomePageContent />
+            </Formik>
+        </>
     );
 }
