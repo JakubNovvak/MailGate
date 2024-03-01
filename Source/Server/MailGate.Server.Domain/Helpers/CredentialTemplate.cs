@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MailGate.Server.Domain
+namespace MailGate.Server.Domain.Helpers
 {
     public class CredentialTemplate
     {
-        public string? userName {  get; set; }
+        public string? userName { get; set; }
         public string? AppPassword { get; set; }
     }
 }
