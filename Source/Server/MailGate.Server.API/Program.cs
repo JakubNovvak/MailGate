@@ -16,6 +16,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins(["http://192.168.0.112:5173", "http://localhost:5173", "https://localhost:5173"])
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        );
+});
+
 if (builder.Environment.IsProduction())
 {
     //TODO: SQL Server implementation
@@ -50,6 +58,8 @@ if (app.Environment.IsDevelopment())
 PrepDatabase.PrepPopulation(app, builder.Environment.IsProduction());
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowOrigin");
 
 app.UseAuthorization();
 
