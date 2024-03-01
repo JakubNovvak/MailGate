@@ -30,7 +30,7 @@ namespace MailGate.Server.Application.Services
 
             var dbEntryEmail = _mapper.Map<DbEntryEmail>(emailEntryToCreate);
 
-            //No need for error handling - the only thing that matter is the delievery status
+            //Caution: At the moment of development, the only information about delievery is "WasSuccessfullySent" field
             bool isSendSuccess;
             try
             {
@@ -44,11 +44,13 @@ namespace MailGate.Server.Application.Services
                 isSendSuccess = false;
             }
 
+            //TODO: Add catch statements for "FileNotFound" and "FileLoad" Exceptions
+
             //Change needed fields
             dbEntryEmail.WhenSubmitted = DateTime.Now.ToUniversalTime();
             dbEntryEmail.WasSuccessfullySent = isSendSuccess;
 
-            //If DbUpdateException, catch in the Controller
+            //Caution: DbUpdateException is catched in the Controller
             _repo.CreateEmailEntry(dbEntryEmail);
 
             return _mapper.Map<ReadEmailEntryDto>(dbEntryEmail);
