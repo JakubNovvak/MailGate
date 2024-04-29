@@ -2,7 +2,7 @@
 <br />
 <div align="center" style="text-align: center;">
   <a href="https://github.com/JakubNovvak/MailGate">
-    <img src="https://i.ibb.co/JmRHNnY/Mail-Gate-Logo.png" alt="Logo" width="110" height="110">
+    <img src="Mail-Gate-Logo.png" alt="Logo" width="110" height="110">
   </a>
 
   <h3 align="center">MailGate</h3>
